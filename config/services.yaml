@@ -1,0 +1,66 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    App\Service\LoadBalancer:
+        shared: true
+        arguments:
+            - ['@host1','@host2','@host3','@host4']
+            - 'roundrobin' # selection between roundrobin|load is possible
+        calls:
+            -   method: setLogger
+                arguments:
+                    - '@logger'
+        autowire: true
+        autoconfigure: false
+
+    # Hosts could also be defined with a parent class which injects logger for example
+
+    host1:
+        class: App\Host
+        arguments:
+            - '192.168.0.1'
+            - '1.05'
+            - '@logger'
+    host2:
+        class: App\Host
+        arguments:
+            - '192.168.0.2'
+            - '0.95'
+            - '@logger'
+    host3:
+        class: App\Host
+        arguments:
+            - '192.168.0.3'
+            - '0.86'
+            - '@logger'
+    host4:
+        class: App\Host
+        arguments:
+            - '192.168.0.4'
+            - '0.75'
+            - '@logger'
