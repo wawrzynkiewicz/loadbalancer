@@ -29,7 +29,7 @@ These instructions assume you have already installed:
 Git clone the application:
 
 ``` bash
-git clone https://github.com/wawrzynkiewicz/lodbalancer.git
+git clone https://github.com/wawrzynkiewicz/loadbalancer.git
 ```
 
 Install required symfony framework and it's components
