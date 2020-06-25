@@ -32,7 +32,7 @@ class LoadBalancer
 
     /**
      * LoadBalancer constructor.
-     * Host's list definition could be done via dependecy injection on various ways
+     * Host's list definition could be done via dependency injection on various ways
      * Possible optimizations:
      * - yaml configuration of initial host instances and algorithm
      * - REST interface to dynamically add/remove hosts and update their load values
