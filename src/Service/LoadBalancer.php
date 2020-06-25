@@ -77,6 +77,10 @@ class LoadBalancer
         $this->cache = new FilesystemAdapter();
     }
 
+    /**
+     * Handle the request internally using the selected load balancing algorithm
+     * @param Request $request
+     */
     public function handleRequest(Request $request)
     {
         switch ($this->algorithm)
@@ -112,7 +116,7 @@ class LoadBalancer
 
         //if last host in list last time, return first
         $total = count($this->hosts);
-        if($this->getLastHostIndex() == ($total-1))
+        if($this->getLastHostIndex() >= ($total-1))
         {
             $this->logger->debug(sprintf('LoadBalancer reached last host of list, resetting to first one.'));
             $this->setLastHostIndex(0);
