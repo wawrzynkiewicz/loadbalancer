@@ -4,12 +4,12 @@
 This is an example LoadBalancer application which can handle requests using two different kinds of balancing methods.
 The web requests will be forwarded to the host matching the algorithm.
 
-###Supported algorithm
+### Supported algorithm
 
-####roundrobin
+#### roundrobin
 The load balancer will simply pass the requests sequentially in rotation to each of the configured and available hosts.
 
-####load
+#### load
 The load balancer will either take the first host that has a load under a specific value (default 0.75) or if all hosts in the list are above the limit, it will take the one with the lowest load.
 
 ## Installation
@@ -63,7 +63,11 @@ Configure your preferred webserver to run web application, here is an example of
 </VirtualHost>
 ```
 
-###Test application:
+In case of Apache you need to ensure the web server has write access to *var/log* directory:
+``` bash
+chown -R <WWW USER> var/log/
+```
+### Test application:
 
 Call the index page of your configured webserver
 
@@ -73,7 +77,7 @@ http://<HOSTNAME>/
 
 and look into the *apache_error.log* log file to see info and debug messages on what's going on.
 
-###Configure application
+### Configure application
 
 Take a deeper look into the *config/services.yaml* to adapt the configuration regarding load balancing algorithm or available hosts and their load.
 
